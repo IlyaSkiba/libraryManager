@@ -1,6 +1,7 @@
 package by.library.controller.layout;
 
 import by.library.controller.base.BaseController;
+import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 

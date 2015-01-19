@@ -3,6 +3,10 @@ apply plugin: 'application'
 
 mainClassName = 'by.library.invoke.Data'
 
+repositories {
+    mavenCentral()
+}
+
 def javaFxHome = "${System.properties.getProperty('java.home')}";
 //There seems to be an issue with Gradle detecting the JDK.
 //So, we have to help a wee bit to find the ant-javafx.jar
@@ -22,16 +26,11 @@ configurations {
     providedCompile
 }
 
-//this one works with file dependencies. If you prefer 
-//e.g. Maven, feel free to change.
-def libFolder = 'lib'
-def includePattern = '*.jar'
-
 //noinspection GroovyAssignabilityCheck
 dependencies {
-    providedCompile files("$javaFxHome/lib/jfxrt.jar")
-    compile fileTree(dir: libFolder, include: includePattern)
     compile "org.springframework:spring-context:$springVersion"
+    compile 'org.slf4j:slf4j-log4j12:1.7.10'
+    providedCompile files("$javaFxHome/lib/jfxrt.jar")
 }
 
 compileJava {
@@ -50,9 +49,7 @@ ant.antJavaFxJar = antJavaFxJar
 ant.mainClassName = mainClassName
 ant.fallbackClassName = 'com.javafx.main.NoJavaFXFallback'
 ant.distDir = libsDir
-ant.distName = jar.archiveName;
-ant.resourceDir = libFolder
-ant.resourceIncludePattern = includePattern
+ant.distName = jar.archiveName
 ant.applicationTitle = title
 ant.applicationVendor = vendor
 ant.applicationVersion = version
